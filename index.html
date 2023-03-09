@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <ul class="box-wrap">
+        <li class="box" data-price="500">
+          <span class="item">사이다</span>
+          <span class="price">500원</span>
+        </li>
+        <li class="box" data-price="1000">
+          <span class="item">콜라</span>
+          <span class="price">1000원</span>
+        </li>
+        <li class="box" data-price="300">
+          <span class="item">비타민음료</span>
+          <span class="price">300원</span>
+        </li>
+      </ul>
+      <div class="btn">
+        <button onclick="moneyAdd(100)">100</button>
+        <button onclick="moneyAdd(500)">500</button>
+        <button onclick="moneyAdd(1000)">1000</button>
+      </div>
+      <div class="result-wrap">
+        <button onclick="resultBtn()">결과 출력</button>
+        <div class="text-wrap"></div>
+      </div>
+    </div>
+    <script>
+      const mxPrice = 10000;
+      let price = 0;
+      const resultPrice = document.querySelector(".text-wrap");
+      const boxPrice = document.querySelectorAll(".box");
+      function moneyAdd(target) {
+        price += target;
+        if (price <= mxPrice) {
+          console.log(price);
+        } else {
+          price -= target;
+          alert("금액 초과");
+        }
+      }
+      function resultBtn() {
+        if (!resultPrice.querySelector("div")) {
+          let div = document.createElement("div");
+          resultPrice.append(div);
+        }
+        let txt = [];
+        //const boxTxt = boxPrice.previousElementSibling.textContent;
+        boxPrice.forEach((e, i) => {
+          const data = e.getAttribute("data-price");
+          if (data <= price) {
+            txt.push(boxPrice[i].querySelector(".item").textContent);
+          }
+          resultPrice.innerHTML = `<p> 총 금액 : ${price} 원</p><p class='text'></p>`;
+          for (let i = 0; i < txt.length; i++) {
+            resultPrice.querySelector(
+              ".text"
+            ).innerHTML += `${txt[i]} 가능<br>`;
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
